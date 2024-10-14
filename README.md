@@ -16,7 +16,7 @@
 
 ## Download
 
-You can download the latest release of **GTA Water Visualizer** [here]().
+You can download the latest release of **GTA Water Visualizer** [here](https://github.com/MadGamerHD/GTA-Water-Visualizer/archive/refs/heads/main.zip).
 
 ## Usage
 
