@@ -21,7 +21,7 @@ You can download the latest release of **GTA Water Visualizer** [here]().
 ## Usage
 
 1. **Run the Executable:**
-   - Locate the downloaded `GTA_Water_Visualizer.exe` file.
+   - Locate the downloaded `GTA_Water_Visualizer.py` file.
    - Double-click the executable to launch the application.
 
 2. **Load a Water Data File:**
