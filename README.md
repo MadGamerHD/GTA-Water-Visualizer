@@ -1,45 +1,69 @@
-# GTA Water Visualizer
+Certainly! Here's a version of the **GTA Water Visualizer (Source Code)** tool description and installation instructions tailored for GitHub, without mentioning cloning:
 
-**Author:** MadGamerHD
+---
 
-## Overview
+# GTA Water Visualizer (Source Code)
 
-**GTA Water Visualizer** is a powerful and user-friendly tool designed for visualizing water shapes and parameters within the Grand Theft Auto (GTA) series, specifically tailored for GTA San Andreas. This application allows users to load `.dat` files containing water data, visualize the water shapes, and explore different parameters in a clear and interactive interface.
+## Overview:
+The **GTA Water Visualizer** is a Python-based tool designed to help visualize water data from `.dat` files, commonly used in the **Grand Theft Auto** series for modding and development purposes. It provides a user-friendly graphical interface to load `.dat` files, select water type parameters, and visualize water shapes in 2D plots.
 
-## Features
+With this tool, you can quickly load water data, filter it by parameter, and observe the corresponding water shapes in a plot. This is useful for modders and developers working with custom water areas in **GTA** environments.
 
-- Load and visualize water data from `.dat` files.
-- Interactive user interface built with Tkinter.
-- Parameter selection for focused visualization.
-- Full-screen mode for an immersive experience.
-- Easily adaptable and customizable for future enhancements.
+## Features:
+- **File Loader**: Easily load `.dat` files containing water data.
+- **Water Shape Visualization**: View water shapes in a 2D plot.
+- **Interactive Parameter Selection**: Filter and visualize shapes based on specific water type parameters.
+- **Fullscreen Mode**: Press F11 to toggle fullscreen for easier viewing.
+- **Previous File Memory**: Remembers the last opened file path for quick access.
 
-## Download
+## Prerequisites:
+Before running the **GTA Water Visualizer**, ensure that you have Python installed. You can download it from the official Python website:
+[Python Download](https://www.python.org/)
 
-You can download the latest release of **GTA Water Visualizer** [here](https://github.com/MadGamerHD/GTA-Water-Visualizer/archive/refs/heads/main.zip).
+## Installation:
 
-## Usage
+To get the tool working, follow these simple steps:
 
-1. **Run the Executable:**
-   - Locate the downloaded `GTA_Water_Visualizer.py` file.
-   - Double-click the executable to launch the application.
+### 1. Install Required Libraries
 
-2. **Load a Water Data File:**
-   - Upon launching, you will see a welcome panel instructing you to load a `water.dat` file.
-   - Click the **Load water.dat** button to select and load your desired water data file. A file dialog will appear for you to navigate to the file's location.
+The tool uses the following Python libraries:
+- **Tkinter** (built-in with Python) for the graphical interface.
+- **Matplotlib** for creating visualizations.
+- **Numpy** for handling numerical operations.
 
-3. **Visualize Water Shapes:**
-   - Once the file is loaded, the **Visualize** button will become enabled.
-   - Click the **Visualize** button to open the visualization window displaying the water shapes.
+You can install the required libraries via `pip`:
 
-4. **Select Parameters:**
-   - In the visualization window, you will see a list of parameters on the left side.
-   - Select the parameter you wish to visualize.
-   - Click the **Visualize Selected Parameter** button to view the corresponding water shape.
+```bash
+pip install matplotlib numpy
+```
 
-5. **Full-Screen Mode:**
-   - For an immersive experience, you can toggle full-screen mode by pressing the `F11` key.
-   - To exit full-screen mode, press the `Escape` key.
+### 2. Download the Source Code
 
-## Acknowledgments
-- Special thanks to the GTA modding community for their inspiration and support.
+Download the `GTA Water Visualizer (Source Code)` as a ZIP file from the repository and extract it to a folder on your computer.
+
+### 3. Running the Tool
+
+Once the required libraries are installed and the source code is downloaded:
+- Navigate to the folder where the source code is located.
+- Open a terminal or command prompt and run the following command:
+
+```bash
+python "GTA Water Visualizer.py"
+```
+
+This will launch the graphical interface of the **GTA Water Visualizer**.
+
+## Usage:
+
+1. **Open the Tool**: Launch the application by running the script.
+2. **Load a Water Data File**: Click the "Load water.dat" button to browse and load a `.dat` file containing water data.
+3. **Visualize the Data**: Once the file is loaded, click "Visualize" to open the visualization window.
+4. **Select Parameters**: Choose a parameter from the list to filter the water shapes you want to visualize.
+5. **View Water Shapes**: The selected water shapes will be displayed in the plot area.
+
+### Fullscreen Mode:
+- Toggle fullscreen by pressing **F11**.
+- Press **Escape** to exit fullscreen.
+
+### File Path Memory:
+- The tool automatically remembers the last file you loaded, making it easy to reopen your last session.
