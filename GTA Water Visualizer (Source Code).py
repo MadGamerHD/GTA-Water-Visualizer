@@ -1,15 +1,17 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox
 import matplotlib.pyplot as plt
 import numpy as np
 from threading import Thread
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import os
 
 class WaterEditorApp:
     def __init__(self, master):
         self.master = master
         self.master.title("Water Data Editor")
         self.data = []
+        self.last_file_path = self.load_last_file_path()  # Load last opened file path
 
         # Create main frame
         self.main_frame = tk.Frame(self.master, padx=10, pady=10)
@@ -37,23 +39,37 @@ class WaterEditorApp:
 
     def load_file(self):
         """Load data from a .dat file."""
-        filename = filedialog.askopenfilename(filetypes=[("Data Files", "*.dat")])
+        filename = filedialog.askopenfilename(filetypes=[("Data Files", "*.dat")], initialfile=self.last_file_path)
         if filename:
             try:
                 with open(filename, 'r') as file:
                     self.data = [line.strip() for line in file if line.strip() and not line.startswith('#')]
                 messagebox.showinfo("Load Success", "File loaded successfully!")
+                self.save_last_file_path(filename)  # Save the last opened file path
                 # Enable the Visualize button
                 self.visualize_button.config(state=tk.NORMAL)
             except Exception as e:
                 messagebox.showerror("Load Error", f"Failed to load file: {e}")
+
+    def save_last_file_path(self, path):
+        """Save the last opened file path to a text file."""
+        with open("last_file_path.txt", "w") as file:
+            file.write(path)
+
+    def load_last_file_path(self):
+        """Load the last opened file path from a text file, if it exists."""
+        if os.path.exists("last_file_path.txt"):
+            with open("last_file_path.txt", "r") as file:
+                return file.read().strip()
+        return ""
 
     def visualize_data(self):
         """Visualize the water shapes in a separate window."""
         self.visualization_window = tk.Toplevel(self.master)
         self.visualization_window.title("Water Shapes Visualization")
         self.create_visualization_ui()
-        
+
+        # Start the visualization in a separate thread
         Thread(target=self.visualize_data_thread).start()
 
     def create_visualization_ui(self):
@@ -71,7 +87,16 @@ class WaterEditorApp:
         self.param_listbox.pack(fill=tk.Y, padx=5, pady=5, expand=True)
 
         # Populate the listbox with parameters
-        unique_params = set(int(line.split()[-1]) for line in self.data if len(line.split()) > 8)
+        unique_params = set()
+        for line in self.data:
+            parts = line.split()
+            if len(parts) > 8:
+                try:
+                    param = int(parts[-1])  # Try to convert the last part to int
+                    unique_params.add(param)
+                except ValueError:
+                    continue  # Ignore lines with invalid integer values
+
         for param in sorted(unique_params):
             self.param_listbox.insert(tk.END, param)
 
@@ -88,9 +113,18 @@ class WaterEditorApp:
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.plot_frame)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
+    def visualize_data_thread(self):
+        """Thread function to visualize selected parameter."""
+        # Wait a moment to ensure the UI is ready
+        self.visualization_window.after(100, self.visualize_selected_param)
+
     def visualize_selected_param(self):
         """Visualize the selected parameter from the listbox."""
-        selected_param = self.param_listbox.get(self.param_listbox.curselection())
+        if not self.param_listbox.curselection():
+            messagebox.showwarning("Select Parameter", "Please select a parameter to visualize.")
+            return  # Return if no selection is made
+
+        selected_param = int(self.param_listbox.get(self.param_listbox.curselection()))
         self.ax.clear()  # Clear previous plots
         self.ax.set_title("Water Shapes Visualization")
         self.ax.set_xlabel("X Coordinate")
@@ -102,7 +136,11 @@ class WaterEditorApp:
             if len(parts) < 8:  # Ensure there are enough parts for points and parameter
                 continue
             
-            param = int(parts[-1])  # Water type parameter
+            try:
+                param = int(parts[-1])  # Water type parameter
+            except ValueError:
+                continue  # Skip if it doesn't match the integer conversion
+
             if param != selected_param:
                 continue  # Skip if it doesn't match the selected parameter
 
